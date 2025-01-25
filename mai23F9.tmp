@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://cam8j4alethhn"]
+
+[ext_resource type="Script" path="res://wall.gd" id="1_pe10t"]
+[ext_resource type="PackedScene" uid="uid://dsk2n1vvpdjyp" path="res://ball/ball.tscn" id="2_4mitj"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_en2q4"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f3sbr"]
+
+[node name="Main" type="Node"]
+
+[node name="Ball" parent="." instance=ExtResource("2_4mitj")]
+position = Vector2(46, 61)
+
+[node name="VisualOnly" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="VisualOnly"]
+z_index = -10
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MidLine" type="ColorRect" parent="VisualOnly"]
+z_index = -1
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wall" type="StaticBody2D" parent="."]
+script = ExtResource("1_pe10t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(0, 10)
+shape = SubResource("WorldBoundaryShape2D_en2q4")
+
+[node name="ColorRect" type="ColorRect" parent="Wall"]
+custom_minimum_size = Vector2(0, 10)
+offset_right = 1996.0
+offset_bottom = 10.0
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(0, 602)
+script = ExtResource("1_pe10t")
+placement = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource("WorldBoundaryShape2D_f3sbr")
+
+[node name="ColorRect" type="ColorRect" parent="Wall2"]
+custom_minimum_size = Vector2(0, 10)
+offset_right = 1996.0
+offset_bottom = 10.0

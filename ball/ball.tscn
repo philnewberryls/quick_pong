@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsk2n1vvpdjyp"]
+
+[ext_resource type="Script" path="res://ball/ball.gd" id="1_recp8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgaa3"]
+
+[sub_resource type="Gradient" id="Gradient_0vbdj"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_csn05"]
+gradient = SubResource("Gradient_0vbdj")
+width = 20
+height = 20
+
+[node name="Ball" type="CharacterBody2D"]
+position = Vector2(575, 313)
+motion_mode = 1
+script = ExtResource("1_recp8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dgaa3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_csn05")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

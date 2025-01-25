@@ -1,0 +1,203 @@
+[gd_scene load_steps=9 format=3 uid="uid://cam8j4alethhn"]
+
+[ext_resource type="Script" path="res://wall.gd" id="1_pe10t"]
+[ext_resource type="Script" path="res://score_display.gd" id="1_q62u4"]
+[ext_resource type="Script" path="res://press_enter_to_restart.gd" id="2_k357d"]
+[ext_resource type="PackedScene" uid="uid://dff56xm2t1un6" path="res://paddle/paddle.tscn" id="3_pot0w"]
+[ext_resource type="Script" path="res://press_to_play.gd" id="4_dj6hp"]
+
+[sub_resource type="SystemFont" id="SystemFont_kt8pu"]
+font_names = PackedStringArray("", "Monospace")
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_en2q4"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f3sbr"]
+
+[node name="Game" type="Node"]
+
+[node name="ScoreBoard" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 47.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScoreBoard"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScoreBoard/VBoxContainer"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="ScoreBoard/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScoreDisplay" type="Label" parent="ScoreBoard/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_kt8pu")
+theme_override_font_sizes/font_size = 40
+text = "0"
+script = ExtResource("1_q62u4")
+
+[node name="Spacer2" type="Control" parent="ScoreBoard/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScoreDisplay2" type="Label" parent="ScoreBoard/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_kt8pu")
+theme_override_font_sizes/font_size = 40
+text = "0"
+script = ExtResource("1_q62u4")
+player = 1
+
+[node name="Spacer3" type="Control" parent="ScoreBoard/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PressEnterToRestart" type="Label" parent="ScoreBoard/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/outline_size = 5
+text = "PRESS ENTER TO RESTART"
+horizontal_alignment = 1
+script = ExtResource("2_k357d")
+
+[node name="VisiblityTimer" type="Timer" parent="ScoreBoard/VBoxContainer/PressEnterToRestart"]
+wait_time = 3.0
+one_shot = true
+
+[node name="VisualOnly" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="VisualOnly"]
+z_index = -10
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MidLine" type="ColorRect" parent="VisualOnly"]
+z_index = -1
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wall" type="StaticBody2D" parent="."]
+script = ExtResource("1_pe10t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(0, 10)
+shape = SubResource("WorldBoundaryShape2D_en2q4")
+
+[node name="ColorRect" type="ColorRect" parent="Wall"]
+custom_minimum_size = Vector2(0, 10)
+offset_right = 1996.0
+offset_bottom = 10.0
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(0, 602)
+script = ExtResource("1_pe10t")
+placement = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource("WorldBoundaryShape2D_f3sbr")
+
+[node name="ColorRect" type="ColorRect" parent="Wall2"]
+custom_minimum_size = Vector2(0, 10)
+offset_right = 1996.0
+offset_bottom = 10.0
+
+[node name="Paddle" parent="." instance=ExtResource("3_pot0w")]
+position = Vector2(30, 284)
+motion_mode = 1
+
+[node name="Paddle2" parent="." instance=ExtResource("3_pot0w")]
+position = Vector2(1122, 284)
+motion_mode = 1
+player = 1
+
+[node name="Label" type="Label" parent="Paddle2"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="PlayerControlIndicator" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -47.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerControlIndicator"]
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="PlayerControlIndicator/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Control" parent="PlayerControlIndicator/HBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PressToPlay" type="Label" parent="PlayerControlIndicator/HBoxContainer/HBoxContainer3"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_kt8pu")
+theme_override_font_sizes/font_size = 20
+text = "PRESS 1 TO PLAY"
+script = ExtResource("4_dj6hp")
+
+[node name="Spacer2" type="Control" parent="PlayerControlIndicator/HBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PlayerControlIndicator/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer2" type="Control" parent="PlayerControlIndicator/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PressToPlay2" type="Label" parent="PlayerControlIndicator/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_kt8pu")
+theme_override_font_sizes/font_size = 20
+text = "PRESS 2 TO PLAY"
+script = ExtResource("4_dj6hp")
+player = 1
+
+[node name="Spacer3" type="Control" parent="PlayerControlIndicator/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="timeout" from="ScoreBoard/VBoxContainer/PressEnterToRestart/VisiblityTimer" to="ScoreBoard/VBoxContainer/PressEnterToRestart" method="_on_visiblity_timer_timeout"]

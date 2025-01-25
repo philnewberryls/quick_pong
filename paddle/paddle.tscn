@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dff56xm2t1un6"]
+
+[ext_resource type="Script" path="res://paddle/paddle.gd" id="1_urrdx"]
+
+[sub_resource type="Gradient" id="Gradient_020nq"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8yuvg"]
+gradient = SubResource("Gradient_020nq")
+width = 20
+height = 30
+
+[node name="Paddle" type="CharacterBody2D"]
+position = Vector2(28, 284)
+script = ExtResource("1_urrdx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 4.06667)
+texture = SubResource("GradientTexture2D_8yuvg")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-10, 60, -10, -60, 10, -60, 10, 60)
+
+[node name="AIDirectionPreferenceSwitcher" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="AIDirectionPreferenceSwitcher" to="." method="_on_ai_direction_preference_switcher_timeout"]
